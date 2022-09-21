@@ -59,6 +59,13 @@ userSchema.statics.login = async (email, pass) => {
     return userData
   };
 
+userSchema.virtual('myPosts',{
+    ref:"posts",
+    localField:"_id",
+    foreignField:'userId'
+  })
+
+  
 userSchema.methods.generateToken= async function(){
   const user = this;
   const token = jwt.sign({_id: user._id}, "zBlogPosts")

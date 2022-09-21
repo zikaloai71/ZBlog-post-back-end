@@ -8,13 +8,13 @@ class User {
       await user.save();
       res.status(200).send({
         apiStatus: true,
-        date: { user, token },
+        data: { user, token },
         message: "user added successfully",
       });
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
-        date: e,
+        data: e,
         message: e.message,
       });
     }
@@ -26,13 +26,13 @@ class User {
       const token = await userData.generateToken();
       res.status(200).send({
         apiStatus: true,
-        date: { userData, token },
+        data: { userData, token },
         message: "logged in ",
       });
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
-        date: e,
+        data: e,
         message: e.message,
       });
     }
@@ -45,13 +45,13 @@ class User {
        await req.user.save()
       res.status(200).send({
         apiStatus: true,
-        date: req.user,
+        data: req.user,
         message: "logged out ",
       });
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
-        date: e,
+        data: e,
         message: e.message,
       });
     }
@@ -63,17 +63,18 @@ class User {
        await req.user.save()
        res.status(200).send({
         apiStatus: true,
-        date: req.user,
+        data: req.user,
         message: "logged out from all devices",
        });
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
-        date: e,
+        data: e,
         message: e.message,
       });
     }
   };
+
 }
 
 module.exports = User;

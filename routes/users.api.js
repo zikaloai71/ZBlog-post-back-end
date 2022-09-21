@@ -10,4 +10,7 @@ router.post("/logOut",auth, userController.logOut);
 
 router.post("/logOutAll",auth, userController.logOutAll);
 
+
+
+
 module.exports = router;

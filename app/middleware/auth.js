@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
     req.token = token; 
     next(); 
   } catch (e) {
-    res.status(500).send({ apiStatus: false, date: e, message: e.message });
+    res.status(500).send({ apiStatus: false, data: e, message: e.message });
   }
 };
 
