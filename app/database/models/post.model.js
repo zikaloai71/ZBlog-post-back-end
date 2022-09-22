@@ -64,10 +64,24 @@ const postsSchema = mongoose.Schema(
         },
       },
     ],
-    likes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+      liId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+      },
+      luName: {
+        type: String,
+        trim: true,
+        required: true,
+        ref: "User",
+      }
+    }],
+    quantityLikes:{
+      type:Number,
+      default:function() {return this.likes.length }
+    }
   },
   { timestamps: true }
 );

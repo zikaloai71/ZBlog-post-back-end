@@ -8,11 +8,15 @@ router.get('/allPosts', postController.allPosts)
 
 router.get('/readPost/:id', postController.readPost)
 
+router.post('/readPost/toggleLike/:id',auth,postController.toggleLike)
+
 router.post('/readPost/addComment/:id',auth,postController.addComment)
 
 router.patch('/readPost/editComment/:id',auth,postController.editComment)
 
 router.delete('/readPost/deleteComment/:id',auth,postController.deleteComment)
+
+
 
 router.get('/myPosts', auth , postController.myPosts)
 

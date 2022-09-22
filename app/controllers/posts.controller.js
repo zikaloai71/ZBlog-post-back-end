@@ -197,6 +197,45 @@ class Post {
       });
     }
   };
+
+  static toggleLike = async (req, res) => {
+    try {
+      const post = await postModel.findById(req.params.id);
+      
+      const check = post.likes.findIndex(like=>String(like.liId) == String(req.user._id) )
+  
+      if(check>=0){
+        post.likes.splice(check,1)
+        post.quantityLikes-=1
+        post.save();
+        res.status(200).send({
+          apiStatus: true,
+          data: post,
+          message: "unlike",
+        });
+      }
+      else{
+      const obj = {
+        liId:req.user._id,
+        luName:req.user.name,
+      }
+      post.likes.push(obj)
+      post.quantityLikes+=1
+      post.save();
+     
+      res.status(200).send({
+        apiStatus: true,
+        data: post,
+        message: "liked",
+      });
+    }
+    } catch (e) {
+      res.status(500).send({
+        apiStatus: false,
+        message: e.message,
+      });
+    }
+  };
 }
 
 module.exports = Post;
