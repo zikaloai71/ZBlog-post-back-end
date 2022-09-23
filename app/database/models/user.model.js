@@ -79,6 +79,12 @@ userSchema.pre("save", async function () {
   }
 });
 
+
+userSchema.statics.checkPass = async (user, oldPass) => {
+  const isValid = await bcryptjs.compare(oldPass, user.password);
+  return isValid;
+};
+
 userSchema.statics.login = async (email, pass) => {
     const userData = await User.findOne({ email });
     if (!userData) throw new Error("invalid email");

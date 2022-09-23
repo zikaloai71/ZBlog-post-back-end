@@ -27,6 +27,8 @@ router.post(
     auth,
     userController.editProfile
   );
+  
+router.patch("/me/editPassword",auth, userController.editPassword);
 
 router.post("/me/savedPosts/:id",auth,userController.savePost)
 
