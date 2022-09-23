@@ -7,35 +7,29 @@ router.post("/signUp", userController.signUp);
 
 router.post("/logIn", userController.logIn);
 
-router.post("/logOut",auth, userController.logOut);
+router.post("/logOut", auth, userController.logOut);
 
-router.post("/logOutAll",auth, userController.logOutAll);
+router.post("/logOutAll", auth, userController.logOutAll);
 
 router.get("/me", auth, (req, res) => {
-    res.send(req.user);
-  });
+  res.send(req.user);
+});
 
 router.post(
-    "/me/profileImage",
-    auth,
-    upload.single("img"),
-    userController.imgUpload
-  );
+  "/me/profileImage",
+  auth,
+  upload.single("img"),
+  userController.imgUpload
+);
 
- router.patch(
-    "/me/editProfile",
-    auth,
-    userController.editProfile
-  );
-  
-router.patch("/me/editPassword",auth, userController.editPassword);
+router.patch("/me/editProfile", auth, userController.editProfile);
 
-router.post("/me/savedPosts/:id",auth,userController.savePost)
+router.patch("/me/editPassword", auth, userController.editPassword);
 
-router.delete("/me/deletePost/:id",auth,userController.removeSavedPost)
+router.post("/me/savedPosts/:id", auth, userController.savePost);
 
-router.delete("/me/deleteAccount",auth,userController.deleteAccount)
+router.delete("/me/deletePost/:id", auth, userController.removeSavedPost);
 
-
+router.delete("/me/deleteAccount", auth, userController.deleteAccount);
 
 module.exports = router;

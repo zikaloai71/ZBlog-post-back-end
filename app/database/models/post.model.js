@@ -8,9 +8,9 @@ const postsSchema = mongoose.Schema(
       ref: "User",
     },
     author: {
-        type:String,
-        required:true,
-        trim:true,
+      type: String,
+      required: true,
+      trim: true,
     },
     title: {
       type: String,
@@ -66,18 +66,19 @@ const postsSchema = mongoose.Schema(
     ],
     likes: [
       {
-      liId:{
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
+        liId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "User",
+        },
+        luName: {
+          type: String,
+          trim: true,
+          required: true,
+          ref: "User",
+        },
       },
-      luName: {
-        type: String,
-        trim: true,
-        required: true,
-        ref: "User",
-      }
-    }],
+    ],
   },
   { timestamps: true }
 );

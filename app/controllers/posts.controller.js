@@ -74,7 +74,6 @@ class Post {
     }
   };
 
-  
   static deletePost = async (req, res) => {
     try {
       await postModel.findOneAndDelete({
@@ -177,12 +176,14 @@ class Post {
       });
 
       let c = post.comments.find((comment) => comment.id == req.params.id);
-      let index = post.comments.findIndex((comment) => comment.id == req.params.id);
-      
+      let index = post.comments.findIndex(
+        (comment) => comment.id == req.params.id
+      );
+
       if (String(req.user._id) != String(c.cuId))
         throw new Error("not Authorized");
 
-      post.comments.splice(index,1)
+      post.comments.splice(index, 1);
       post.save();
 
       res.status(200).send({
@@ -201,33 +202,34 @@ class Post {
   static toggleLike = async (req, res) => {
     try {
       const post = await postModel.findById(req.params.id);
-      
-      const check = post.likes.findIndex(like=>String(like.liId) == String(req.user._id) )
-  
-      if(check>=0){
-        post.likes.splice(check,1)
-        
+
+      const check = post.likes.findIndex(
+        (like) => String(like.liId) == String(req.user._id)
+      );
+
+      if (check >= 0) {
+        post.likes.splice(check, 1);
+
         post.save();
         res.status(200).send({
           apiStatus: true,
           data: post,
           message: "unlike",
         });
+      } else {
+        const obj = {
+          liId: req.user._id,
+          luName: req.user.name,
+        };
+        post.likes.push(obj);
+        post.save();
+
+        res.status(200).send({
+          apiStatus: true,
+          data: post,
+          message: "liked",
+        });
       }
-      else{
-      const obj = {
-        liId:req.user._id,
-        luName:req.user.name,
-      }
-      post.likes.push(obj)
-      post.save();
-     
-      res.status(200).send({
-        apiStatus: true,
-        data: post,
-        message: "liked",
-      });
-    }
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
@@ -239,13 +241,12 @@ class Post {
   static numberOfLikes = async (req, res) => {
     try {
       const post = await postModel.findById(req.params.id);
-    
+
       res.status(200).send({
         apiStatus: true,
         data: post.likes.length,
         message: "number of likes fetched",
       });
-    
     } catch (e) {
       res.status(500).send({
         apiStatus: false,
@@ -253,7 +254,6 @@ class Post {
       });
     }
   };
-
 }
 
 module.exports = Post;

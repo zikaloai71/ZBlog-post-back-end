@@ -78,9 +78,8 @@ class User {
   };
   static editPassword = async (req, res) => {
     try {
-      
       const valid = await userModel.checkPass(req.user, req.body.oldPass);
-       
+
       if (!valid) throw new Error("enter correct pass");
 
       req.user.password = req.body.password;
@@ -188,7 +187,7 @@ class User {
 
       req.user.savedPosts.splice(index, 1);
 
-      await req.user.save(); 
+      await req.user.save();
       res.status(200).send({
         apiStatus: true,
         data: req.user,
