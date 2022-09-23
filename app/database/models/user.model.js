@@ -29,6 +29,34 @@ const userSchema = mongoose.Schema(
       enum: ["male", "female" ,"prefer not to say"],
       lowercase:true
     },
+    savedPosts:[
+     {
+      postId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      title:{
+        type:String,
+        trim:true,
+        required: true,
+      },
+      author:{
+        type:String,
+        trim:true,
+        required: true,
+      },
+      snippet:{
+        type:String,
+        trim:true,
+        required:true,
+      },
+      content:{
+         type:String,
+         trim:true,
+         required:true
+      }
+     }
+    ],
     tokens:[
       {
         token:{type:String , required:true}
@@ -65,6 +93,15 @@ userSchema.virtual('myPosts',{
     foreignField:'userId'
   })
 
+const postModel = require('./post.model');
+
+userSchema.pre('remove',async function(req,res,next){
+    const user = this;
+    await postModel.deleteMany({userId:user._id})
+    await postModel.updateMany({}, { $pull: { comments: { cuId: user._id } } });
+    await postModel.updateMany({}, { $pull: { likes: { liId: user._id }}});
+    next()
+  })
   
 userSchema.methods.generateToken= async function(){
   const user = this;

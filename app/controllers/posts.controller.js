@@ -74,7 +74,7 @@ class Post {
     }
   };
 
-  //virtual doesn't make changes to actual db fix this
+  
   static deletePost = async (req, res) => {
     try {
       await postModel.findOneAndDelete({
@@ -206,7 +206,7 @@ class Post {
   
       if(check>=0){
         post.likes.splice(check,1)
-        post.quantityLikes-=1
+        
         post.save();
         res.status(200).send({
           apiStatus: true,
@@ -220,7 +220,6 @@ class Post {
         luName:req.user.name,
       }
       post.likes.push(obj)
-      post.quantityLikes+=1
       post.save();
      
       res.status(200).send({
@@ -236,6 +235,25 @@ class Post {
       });
     }
   };
+
+  static numberOfLikes = async (req, res) => {
+    try {
+      const post = await postModel.findById(req.params.id);
+    
+      res.status(200).send({
+        apiStatus: true,
+        data: post.likes.length,
+        message: "number of likes fetched",
+      });
+    
+    } catch (e) {
+      res.status(500).send({
+        apiStatus: false,
+        message: e.message,
+      });
+    }
+  };
+
 }
 
 module.exports = Post;

@@ -10,6 +10,8 @@ router.get('/readPost/:id', postController.readPost)
 
 router.post('/readPost/toggleLike/:id',auth,postController.toggleLike)
 
+router.get('/readPost/numberOfLikes/:id',postController.numberOfLikes)
+
 router.post('/readPost/addComment/:id',auth,postController.addComment)
 
 router.patch('/readPost/editComment/:id',auth,postController.editComment)

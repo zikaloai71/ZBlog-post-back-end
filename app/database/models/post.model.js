@@ -78,10 +78,6 @@ const postsSchema = mongoose.Schema(
         ref: "User",
       }
     }],
-    quantityLikes:{
-      type:Number,
-      default:function() {return this.likes.length }
-    }
   },
   { timestamps: true }
 );
