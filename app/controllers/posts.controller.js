@@ -3,7 +3,7 @@ const postModel = require("../database/models/post.model");
 class Post {
   static allPosts = async (req, res) => {
     try {
-      const posts = await postModel.find();
+      const posts = await postModel.find().sort({createdAt:-1});
 
       res.status(200).send({
         apiStatus: true,
