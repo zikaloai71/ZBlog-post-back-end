@@ -22,6 +22,7 @@ class User {
     }
   };
 
+
   static logIn = async (req, res) => {
     try {
       const userData = await userModel.login(req.body.email, req.body.password);
@@ -98,6 +99,7 @@ class User {
       });
     }
   };
+
   static editProfile = async (req, res) => {
     try {
       const myUpdates = Object.keys(req.body);
@@ -107,7 +109,11 @@ class User {
       );
       if (!validEdits) throw new Error("invalid edits");
       myUpdates.forEach((update) => (req.user[update] = req.body[update]));
+  
+      await postModel.updateMany({userId:req.user._id}, { $set: { author: req.body.name } });
+      
       await req.user.save();
+
       res.status(200).send({
         apiStatus: true,
         data: req.user,

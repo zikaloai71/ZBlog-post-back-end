@@ -10,6 +10,7 @@ class Post {
         data: posts,
         message: "all posts fetched",
       });
+      
     } catch (e) {
       res.status(500).send({
         apiStatus: false,

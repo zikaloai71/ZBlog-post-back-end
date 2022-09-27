@@ -14,22 +14,26 @@ const postsSchema = mongoose.Schema(
     },
     title: {
       type: String,
+      min: 5,
+      max: 15,
       required: true,
       trim: true,
-      min: 5,
-      max: 12,
+     
     },
     snippet: {
       type: String,
+      min: 5,
+      max: 30,
       trim: true,
       required: true,
-      min: 5,
-      max: 20,
+    
     },
     content: {
       type: String,
+      min:1000,
       required: true,
       trim: true,
+      
     },
     category: {
       type: String,
