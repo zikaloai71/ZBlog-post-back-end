@@ -22,6 +22,8 @@ router.post(
   userController.imgUpload
 );
 
+
+
 router.patch("/me/editProfile", auth, userController.editProfile);
 
 router.patch("/me/editPassword", auth, userController.editPassword);

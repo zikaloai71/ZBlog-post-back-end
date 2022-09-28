@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema(
   {
-    name: { type: String, trim: true, required: true },
+    name: { type: String, trim:true, required: true },
     age: {
       type: Number,
       default: 21,
@@ -53,6 +53,14 @@ const userSchema = mongoose.Schema(
         content: {
           type: String,
           trim: true,
+          required: true,
+        },
+      },
+    ],
+    likedPosts: [
+      {
+        postId: {
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
         },
       },

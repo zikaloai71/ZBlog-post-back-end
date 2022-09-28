@@ -1,5 +1,5 @@
 const postModel = require("../database/models/post.model");
-
+const userModel = require('../database/models/user.model')
 class Post {
   static allPosts = async (req, res) => {
     try {
@@ -203,27 +203,43 @@ class Post {
   static toggleLike = async (req, res) => {
     try {
       const post = await postModel.findById(req.params.id);
-
+      const user = await userModel.findById(req.user._id);
       const check = post.likes.findIndex(
         (like) => String(like.liId) == String(req.user._id)
       );
-
+     const index = user.likedPosts.findIndex(lp=> lp.postId == post._id)
+     
       if (check >= 0) {
         post.likes.splice(check, 1);
+        user.likedPosts.splice(index,1)
 
-        post.save();
+       
+        await post.save();
+        await user.save();
+
         res.status(200).send({
           apiStatus: true,
           data: post,
           message: "unlike",
         });
-      } else {
+      }
+       else {
         const obj = {
           liId: req.user._id,
           luName: req.user.name,
         };
+
+        const obj2 = {
+          postId : req.params.id
+        }
+        
         post.likes.push(obj);
-        post.save();
+        user.likedPosts.push(obj2);
+
+       
+
+        await post.save();
+        await user.save();
 
         res.status(200).send({
           apiStatus: true,

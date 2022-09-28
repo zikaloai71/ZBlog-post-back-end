@@ -131,13 +131,14 @@ class User {
   static imgUpload = async (req, res) => {
     try {
       let oldImg;
+      
+      if (! req.file.path ) throw new Error('no input image');
 
-      if (req.user.image)
-        oldImg = path.join(__dirname, "../../", req.user.image);
+      if (req.user.image) oldImg = path.join(__dirname, "../../", req.user.image);
       else oldImg = null;
 
-      if (oldImg) fs.unlinkSync(oldImg);
-
+      if (oldImg) fs.unlinkSync(oldImg); 
+      
       req.user.image = req.file.path;
 
       await req.user.save();
@@ -154,6 +155,7 @@ class User {
       });
     }
   };
+
 
   static savePost = async (req, res) => {
     try {
